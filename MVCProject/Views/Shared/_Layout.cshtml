@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link type="text/css" rel="stylesheet" href="/Content/MVCStyling2.css"/>
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <h1>Richard Larsson</h1>
+    <div>
+        @Html.ActionLink("Home","Index","Home")
+        @Html.ActionLink("About","About","Home")
+        @Html.ActionLink("Projects","Projects","Home")
+        @Html.ActionLink("Contact", "Contact", "Home")
+    </div>
+    <div class="main">
+        @RenderBody()
+    </div>
+
+    <footer>@DateTime.Now.ToString("yyyy/MM/dd") Richard Larsson</footer>
+</body>
+</html>
