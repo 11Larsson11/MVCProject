@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewData["Title"] = "FeverCheck";
+}
+
+<h2>Do you have a fever?</h2>
+<p>Do you have a fever? Or do you suffer from hypothermia? Check below!</p>
+
+<div id="tempPost">
+    <form asp-controller="Doctor" asp-action="FeverCheck" method="post">
+        <label>Your current temperature:</label>
+        <input type="number" name="temp" />
+        <input type="submit" value="Diagnose me!"/>
+    </form>
+</div>
+
+
+@if (ViewBag.diagnosis != "noInfo")
+{
+<p>@ViewBag.diagnosis</p>
+}
