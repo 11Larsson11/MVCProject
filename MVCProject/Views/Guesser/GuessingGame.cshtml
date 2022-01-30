@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewData["Title"] = "GuessingGame";
+}
+
+<h2>Guessing Game</h2>
+
+<p>I'm thinking of a number between 1 and 100...</p>
+
+<div id="tempPost">
+
+    <form asp-action="GuessingGame" asp-controller="Guesser" method="post">
+
+        <label>Your guess:</label>
+        <input type="text" name="userGuess" />
+        <input type="submit" value="Try!" />
+
+    </form>
+</div>
+
+<div>
+
+    @if (ViewBag.GuessResponse != "Correct")
+    {
+        @ViewBag.Guessresponse;
+    }
+
+    @if (ViewBag.GuessResponse == "Correct")
+    {
+        <script>
+            alert('Great! You made it!');
+            location.replace("GuessingGame");   //Reloading the page to get a new random number
+        </script>
+    }
+</div>
+
+
+

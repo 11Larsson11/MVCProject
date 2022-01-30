@@ -7,13 +7,20 @@
     <title>@ViewBag.Title</title>
 </head>
 <body>
+
+
+
+
+
     <h1>Richard Larsson</h1>
     <div>
-        @Html.ActionLink("Home","Index","Home")
-        @Html.ActionLink("About","About","Home")
-        @Html.ActionLink("Projects","Projects","Home")
+        @Html.ActionLink("Home", "Index", "Home")
+        @Html.ActionLink("About", "About", "Home")
+        @Html.ActionLink("Projects", "Projects", "Home")
         @Html.ActionLink("Contact", "Contact", "Home")
         @Html.ActionLink("Feverchecker", "FeverCheck", "Doctor")
+        @Html.ActionLink("Guessing Game", "GuessingGame", "Guesser")
+
     </div>
     <div class="main">
         @RenderBody()

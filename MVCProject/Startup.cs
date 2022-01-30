@@ -16,6 +16,10 @@ namespace MVCProject
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddHttpContextAccessor();
+            services.AddSession();
+
             services.AddMvc();
         }
 
@@ -28,7 +32,10 @@ namespace MVCProject
             }
 
             app.UseStaticFiles();
+
             app.UseRouting();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
@@ -40,7 +47,10 @@ namespace MVCProject
                     name: "FeverCheck",
                     pattern: "FeverCheck",
                     defaults: new {controller = "Doctor", action = "FeverCheck"}) ;
-
+                endpoints.MapControllerRoute(
+                    name: "GuessingGame",
+                    pattern: "GuessingGame",
+                    defaults: new { controller = "Guesser", action = "GuessingGame" });
             });
         }
     }
