@@ -1,0 +1,74 @@
+﻿@model List<Person>
+<!--IEnumerable<MVCProject.Models.Person> -->
+
+
+@{
+    ViewData["Title"] = "PersonIndex";
+}
+
+<h2>List of trusted people</h2>
+
+@ViewBag.msg
+
+<div id="tempPost">
+
+    <h3>Searching for someone... trustworthy?</h3>
+    <form asp-action="Search" asp-controller="Person" method="post">
+
+        <input id="field" type="text" name="text" /><br />
+        <br />
+        <input type="submit" value="Go ahead! I'm always lucky!" />
+
+    </form>
+</div>
+
+
+<div id="tempPost">
+
+    <h3>Add more trustworthy persons to the list</h3>
+    <form asp-action="Create" asp-controller="Person" method="post">
+
+        <input id="field" type="text" name="name" placeholder="Name or alias" /><br />
+        <br />
+        <input id="field" type="text" name="city" placeholder="City of residence" /><br />
+        <br />
+        <input id="field" type="text" name="phonenumber" placeholder="Phone number" /><br />
+        <br />
+        <input type="submit" value="Add!" />
+
+    </form>
+</div>
+
+<div id="trusted">
+    <h3>List of trused individuals</h3>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>City</th>
+            <th>Phone Number</th>
+        </tr>
+
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    
+                    @item.City
+                </td>
+                <td>
+                    @item.PhoneNumber
+                </td>
+                <td>
+
+                    @Html.ActionLink("Delete", "DeletePerson", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+

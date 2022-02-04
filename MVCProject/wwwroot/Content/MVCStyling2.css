@@ -5,6 +5,7 @@
     margin: 0 auto 0 auto;
 }
 
+
 h1 {
     color: blue;
 }
@@ -25,4 +26,9 @@ footer {
 #tempPost {
     border: 1px solid black;
     padding: 25px;
+
 }
+
+
+
+
