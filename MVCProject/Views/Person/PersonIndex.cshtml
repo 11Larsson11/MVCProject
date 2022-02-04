@@ -41,34 +41,17 @@
 
 <div id="trusted">
     <h3>List of trused individuals</h3>
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>City</th>
-            <th>Phone Number</th>
-        </tr>
-
-
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @item.Name
-                </td>
-                <td>
-                    
-                    @item.City
-                </td>
-                <td>
-                    @item.PhoneNumber
-                </td>
-                <td>
-
-                    @Html.ActionLink("Delete", "DeletePerson", new { id = item.Id })
-                </td>
-            </tr>
-        }
-
-    </table>
 </div>
+    
+
+@foreach (var item in Model)
+      {
+      <div class="row">
+
+           <partial name="_partialListedPersons" model="item" />
+
+      </div>
+      }
+
+
 
