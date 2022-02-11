@@ -62,10 +62,23 @@ namespace MVCProject.Models
                 return matches;
         }
 
+        public Person GetById(int id)
+        {
+            return _personRepo.Read(id);
+        }
 
         public bool DeletePerson(int id)
         {
-            return _personRepo.DeletePerson(id);
+
+            var p = GetById(id);
+            if (p != null)
+
+                     return _personRepo.DeletePerson(id);
+         
+            else
+            
+                return false;
+
         }
     }
 }

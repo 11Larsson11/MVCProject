@@ -1,0 +1,30 @@
+﻿@model Person
+
+@{
+    ViewData["Title"] = "PersonIndex";
+}
+
+
+<h2>List of trusted people</h2>
+
+<div id="tempPost">
+    <h3>List of trusted individuals</h3>
+    <div>
+        <button onclick="GetViewAll('@Url.Action("PartialViewAll", "Ajax")')" data-target="displayPersons">View All Persons</button>
+
+        <h3>Or enter a specific ID</h3>
+
+        <div>
+            <input id="IdInput" type="number" placeholder="Enter ID">
+            <button onclick="GetDetailsID('@Url.Action("FindId", "Ajax")')" data-target="displayPersons">View Details</button>
+            <button onclick="GetDeleteID('@Url.Action("DeleteId", "Ajax")')" data-target="displayPersons">Delete</button>
+        </div>
+    </div>
+</div>
+
+<div id="displayPersons">
+    
+</div>
+
+
+

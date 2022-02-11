@@ -12,6 +12,7 @@ namespace MVCProject.Models
         List<Person> GetList();
         List<Person> Search(string text);
         bool DeletePerson(int id);
+        Person GetById(int id);
 
     }
 }

@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Person>
+
+<h3>All persons</h3>
+
+@foreach (var item in Model)
+{
+    <div class="row">
+
+        <partial name="_partialListedPersons" model="item" />
+
+    </div>
+}
+
+
+
+
+

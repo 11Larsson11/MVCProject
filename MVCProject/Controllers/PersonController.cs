@@ -11,6 +11,8 @@ namespace MVCProject.Controllers
 {
     public class PersonController : Controller
     {
+        
+   
         private readonly IPersonService _personService;
 
         public PersonController()
@@ -24,21 +26,22 @@ namespace MVCProject.Controllers
             model.AllPersons = _personService.GetList();
 
             return View(model.AllPersons);
+
         }
 
 
-        // GET: CodeInfosController/Create
         [HttpGet]
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: CodeInfosController/Create
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(CreatePersonViewModel createViewModel)
         {
+
             if (ModelState.IsValid)
             {
                 Person person = _personService.Add(createViewModel);
@@ -61,14 +64,41 @@ namespace MVCProject.Controllers
             return View("PersonIndex", _personService.Search(text));
         }
 
+        [HttpGet]
+        public IActionResult SearchPartial()
+        {
+            return PartialView("_SearchPartial");
+        }
+
+        [HttpPost]
+        public IActionResult SearchPartial(string text)
+        {
+            return PartialView("_SearchPartial", _personService.Search(text));
+        }
+
+
+
+        public IActionResult Details(int id)
+        {
+            Person person = _personService.GetById(id);
+
+            if (person == null)
+            {
+                return RedirectToAction(nameof(PersonIndex));
+            }
+
+            return View(person);
+        }
 
         public IActionResult DeletePerson(int Id)
         {
-            if (Id != 0)
+            //if (Id != 0)
+            try
             {
                 _personService.DeletePerson(Id);
             }
-            else
+            catch
+            //else
             {
                 ViewBag.msg = "It can't be true. Something went wrong!";
             }
