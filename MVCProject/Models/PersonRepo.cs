@@ -34,10 +34,12 @@ namespace MVCProject.Models
             return newPerson;
         }
 
+        
         public List<Person> Read()
         {
             return listedPersons;
         }
+        
 
         public Person Read(int id)
         {

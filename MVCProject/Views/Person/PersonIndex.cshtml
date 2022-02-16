@@ -42,20 +42,6 @@
 </div>
 
 
-<div id="tempPost">
-
-    <h3>Check or delete individual</h3>
-    <form asp-action="Create" asp-controller="Person" method="post">
-
-        <input id="field" type="text" name="name" placeholder="Person ID" /><br />
-        <br />
-        <button onclick="getPartialLink(event)" data-target="displayPersons" asp-action="SearchPartial" asp-controller="Persons">Search</button>
-        <a onclick="getPartialLink(event)" data-target="displayPersons" asp-action="PersonCreatePartial" asp-controller="Ajax">Partial Create Person</a>
-        <button>Delete</button>
-
-    </form>
-</div>
-
 <div id="trusted">
     <h3>List of trused individuals</h3>
     <table>

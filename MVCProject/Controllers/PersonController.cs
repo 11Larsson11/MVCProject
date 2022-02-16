@@ -77,7 +77,6 @@ namespace MVCProject.Controllers
         }
 
 
-
         public IActionResult Details(int id)
         {
             Person person = _personService.GetById(id);
@@ -92,13 +91,13 @@ namespace MVCProject.Controllers
 
         public IActionResult DeletePerson(int Id)
         {
-            //if (Id != 0)
+            
             try
             {
                 _personService.DeletePerson(Id);
             }
             catch
-            //else
+            
             {
                 ViewBag.msg = "It can't be true. Something went wrong!";
             }

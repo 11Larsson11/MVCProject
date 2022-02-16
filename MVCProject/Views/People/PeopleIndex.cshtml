@@ -1,0 +1,68 @@
+﻿@model MVCProject.ViewModels.PeopleViewModel
+
+@{
+    ViewData["Title"] = "PeopleIndex";
+}
+
+<h2>Entity Framework</h2>
+
+<div id="tempPost">
+
+    <h3>Add person</h3>
+    <form asp-action="Create" asp-controller="People" method="post">
+
+        <input id="field" type="text" name="name" placeholder="Name or alias" /><br />
+        <br />
+        <input id="field" type="text" name="city" placeholder="City of residence" /><br />
+        <br />
+        <input id="field" type="text" name="phonenumber" placeholder="Phone number" /><br />
+        <br />
+        <input type="submit" value="Add!" />
+
+    </form>
+</div>
+
+<div id="tempPost">
+
+    <h3>Delete person</h3>
+    <form asp-action="DeletePeople" asp-controller="People" method="post">
+
+        <input id="field" type="text" name="Id" placeholder="Enter Id" /><br />
+        <br />
+        <input type="submit" value="Remove!" />
+
+    </form>
+</div>
+
+
+<div id="trusted">
+    <h3>List of random individuals</h3>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>City</th>
+            <th>Phone Number</th>
+        </tr>
+
+
+        @foreach (var item in Model.AllPersons)
+        {
+    <tr>
+        <td>
+            @item.Id
+        </td>
+        <td>
+            @item.Name
+        </td>
+        <td>
+            @item.City
+        </td>
+        <td>
+            @item.PhoneNumber
+        </td>
+    </tr>
+        }
+
+    </table>
+</div>       
