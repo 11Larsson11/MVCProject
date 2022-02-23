@@ -1,24 +1,18 @@
 ﻿using MVCProject.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace MVCProject.ViewModels
 {
-    public class CreatePersonViewModel
+    public class PersonViewModel
     {
-        [Required]
-        [StringLength(50, MinimumLength = 1)]
+        public long Id { get; set; }
         public string Name { get; set; }
-
         public City City { get; set; }
-        
-        public int CityId { get; set; }
-
-        [Required]
-        [StringLength(25, MinimumLength = 5)]
         public string PhoneNumber { get; set; }
+
+        public PersonViewModel(){}
     }
 }

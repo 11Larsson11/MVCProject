@@ -1,68 +1,76 @@
-﻿@model MVCProject.ViewModels.PeopleViewModel
+﻿@model PeopleViewModel
 
 @{
-    ViewData["Title"] = "PeopleIndex";
+    ViewData["Title"] = "Index";
 }
 
-<h2>Entity Framework</h2>
+<h1>People</h1>
+
 
 <div id="tempPost">
+    <h3>Create new person</h3>
 
-    <h3>Add person</h3>
-    <form asp-action="Create" asp-controller="People" method="post">
+    <div>
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly"></div>
+            <div>
+                <label>Name</label>
+                <input asp-for="CreatePersonViewModel.Name" />
+                <span asp-validation-for="CreatePersonViewModel.Name"></span>
+            </div>
+            <div>
+                <label>Choose City</label>
+                <select asp-for="CreatePersonViewModel.CityId" asp-items="ViewBag.CityId"></select>
+            </div>
 
-        <input id="field" type="text" name="name" placeholder="Name or alias" /><br />
-        <br />
-        <input id="field" type="text" name="city" placeholder="City of residence" /><br />
-        <br />
-        <input id="field" type="text" name="phonenumber" placeholder="Phone number" /><br />
-        <br />
-        <input type="submit" value="Add!" />
-
-    </form>
-</div>
-
-<div id="tempPost">
-
-    <h3>Delete person</h3>
-    <form asp-action="DeletePeople" asp-controller="People" method="post">
-
-        <input id="field" type="text" name="Id" placeholder="Enter Id" /><br />
-        <br />
-        <input type="submit" value="Remove!" />
-
-    </form>
+            <div>
+                <label>Phone Number</label>
+                <input asp-for="CreatePersonViewModel.PhoneNumber" />
+                <span asp-validation-for="CreatePersonViewModel.PhoneNumber" ></span>
+            </div>
+            <div>
+                <input type="submit" value="Create" />
+            </div>
+        </form>
+    </div>
 </div>
 
 
 <div id="trusted">
-    <h3>List of random individuals</h3>
+    <h3>List of people</h3>
     <table>
         <tr>
-            <th>Id</th>
             <th>Name</th>
             <th>City</th>
+            <th>Country</th>
             <th>Phone Number</th>
+            <th>Delete</th>
         </tr>
 
+        <tbody>
+            @foreach (var person in Model.People)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => person.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => person.City.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => person.City.Country.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => person.PhoneNumber)
+                    </td>
 
-        @foreach (var item in Model.AllPersons)
-        {
-    <tr>
-        <td>
-            @item.Id
-        </td>
-        <td>
-            @item.Name
-        </td>
-        <td>
-            @item.City
-        </td>
-        <td>
-            @item.PhoneNumber
-        </td>
-    </tr>
-        }
+                    <td>
+                        <a asp-action="Delete" asp-route-id="@person.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
 
     </table>
-</div>       
+</div>
+

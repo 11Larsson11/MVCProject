@@ -1,0 +1,55 @@
+﻿@model AllCitiesViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Cities</h1>
+
+<div id="tempPost">
+    <h3>Create new city</h3>
+
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" ></div>
+        <div>
+            <label>City name</label>
+            <input asp-for="City.Name"  />
+            <span asp-validation-for="City.Name" ></span>
+        </div>
+    <div>
+            <label>Choose country</label>
+            <select asp-for="City.CountryId" asp-items="ViewBag.CountryId"></select>
+        </div>
+        <div>
+            <input type="submit" value="Create" />
+        </div>
+    </form>
+</div>
+
+<div id="trusted">
+    <h3>List of cities</h3>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Country</th>
+            <th>Delete</th>
+        </tr>
+
+
+        @foreach (var item in Model.Cities)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Country.Name
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

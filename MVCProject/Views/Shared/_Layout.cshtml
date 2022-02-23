@@ -18,19 +18,23 @@
         @Html.ActionLink("Contact", "Contact", "Home")
         @Html.ActionLink("Feverchecker", "FeverCheck", "Doctor")
         @Html.ActionLink("Guessing Game", "GuessingGame", "Guesser")
-        @Html.ActionLink("People", "PersonIndex", "Person")
-        @Html.ActionLink("Ajax People", "PersonIndex", "Ajax")
-        @Html.ActionLink("EF People", "PeopleIndex", "People")
-
-
-
     </div>
+
+    <h3>People - Cities - Countries</h3>
+    <div>       
+        @Html.ActionLink("People", "PeopleIndex", "People")
+        @Html.ActionLink("Cities", "Index", "City")
+        @Html.ActionLink("Countries", "Index", "Country")
+    </div>
+
+
+
     <div class="main">
         @RenderBody()
     </div>
 
     <footer>@DateTime.Now.ToString("yyyy/MM/dd") Richard Larsson</footer>
-    
+
     <script src="~/lib/jquery/jquery.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("scripts", required: false)

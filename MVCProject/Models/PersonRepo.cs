@@ -9,41 +9,29 @@ namespace MVCProject.Models
     public class PersonRepo : IPersonRepo
 
     {
-        private static int idCounter = 4;
-        private static List<Person> listedPersons = new List<Person>();
+        public List<Person> People { get; set; }
 
-
-        static PersonRepo()
+        public PersonRepo()
         {
-            listedPersons.Add(new Person() { Id = 1, Name = "Pölen", City = "Rottne", PhoneNumber = "043016624" });
-            listedPersons.Add(new Person() { Id = 2, Name = "TeKå", City = "Borås", PhoneNumber = "0721453456" });
-            listedPersons.Add(new Person() { Id = 3, Name = "Koma", City = "Sundbyberg", PhoneNumber = "0771242424" });
-            listedPersons.Add(new Person() { Id = 4, Name = "Greven", City = "Malmö", PhoneNumber = "031184698" });
-
+            People = new List<Person>(){};
         }
 
         public Person Create(Person person)
         {
-            Person newPerson = new Person();
-            newPerson.Id = ++idCounter;
-            newPerson.Name = person.Name;
-            newPerson.City = person.City;
-            newPerson.PhoneNumber = person.PhoneNumber;
-
-            listedPersons.Add(newPerson);
-            return newPerson;
+            People.Add(person);
+            return person;
         }
 
         
         public List<Person> Read()
         {
-            return listedPersons;
+            return People;
         }
         
 
         public Person Read(int id)
         {
-            return listedPersons.SingleOrDefault(c => c.Id == id);
+            return People.SingleOrDefault(c => c.Id == id);
         }
 
         public Person Update(Person person)
@@ -73,7 +61,7 @@ namespace MVCProject.Models
                 return false;
             }
 
-            return listedPersons.Remove(original);
+            return People.Remove(original);
 
         }
     }

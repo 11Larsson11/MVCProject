@@ -1,98 +1,84 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using MVCProject.DataModels;
 using MVCProject.Models;
 using MVCProject.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace MVCProject.Controllers
 {
     public class PeopleController : Controller
     {
         private readonly PersonContext _context;
-        private readonly IPersonService _personService;
 
         public PeopleController(PersonContext context)
         {
             _context = context;
-            _personService = new PersonService();
         }
-
 
         public IActionResult PeopleIndex()
         {
+            ViewData["CityId"] = new SelectList(_context.Cities, "Id", "Name");
+            return View(new PeopleViewModel(_context.People
 
-            var newList = new PeopleViewModel
-            {
-                AllPersons = _context.People.ToList()   //The Linq
-            };
+                //returning a viewmodel that includes city and country
 
-            return View(newList);
-
+                                    .Include(person => person.City)
+                                    .Include(person => person.City.Country)
+                                    .ToList()
+                                    .Select(person => CreatePersonViewModel(person))
+                                    .ToList()
+                                    ));
         }
-
-        public ActionResult Create()
-        {
-            return View();
-        }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CreatePersonViewModel createViewModel)
+        public IActionResult Create(int Id, string Name, int CityId, string PhoneNumber, CreatePersonViewModel createPersonViewModel)
+        
         {
+            Person person = CreatePerson(createPersonViewModel);
             if (ModelState.IsValid)
             {
-                Person person = _personService.Add(createViewModel);
-
-                Person newPerson = new Person();
-        
-
-                newPerson.Name = person.Name;
-                newPerson.City = person.City;
-                newPerson.PhoneNumber = person.PhoneNumber;
-
-                _context.People.Add(newPerson);
+                _context.Add(person);
                 _context.SaveChanges();
-
-
-                if (person != null)
-                {
-                    return RedirectToAction(nameof(PeopleIndex), "People");
-                }
-
-                ModelState.AddModelError("Storage", "Failed to save");
-            }
-
-            return Redirect("PeopleIndex");
-        }
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeletePeople(int Id)
-        {
-            //if (Id != 0)
-            try
-            {
-                var personToRemove =_context.People.Find(Id);
-
-                _context.People.Remove(personToRemove);
-                _context.SaveChanges();
-
-                return Redirect("PeopleIndex");
-             }
-            
-            //else
-            catch
-            {
-                ViewBag.msg = "It can't be true. Something went wrong!";
             }
 
             return RedirectToAction("PeopleIndex");
+        }
+
+
+        public IActionResult Delete(int? id)
+        {
+            var person = _context.People
+                .Include(person => person.City)
+                .FirstOrDefault(person => person.Id == id);
+
+                _context.People.Remove(person);
+                _context.SaveChanges();
+
+            return RedirectToAction("PeopleIndex");
+        }
+
+        private Person CreatePerson(CreatePersonViewModel createPersonViewModel)
+        {
+            Person person = new Person();
+            person.Name = createPersonViewModel.Name;
+            person.City = createPersonViewModel.City;
+            person.CityId = createPersonViewModel.CityId;
+            person.PhoneNumber = createPersonViewModel.PhoneNumber;
+            return person;
+        }
+
+        private PersonViewModel CreatePersonViewModel(Person person)
+        {
+            PersonViewModel model = new PersonViewModel();
+            model.Id = person.Id;
+            model.Name = person.Name;
+            model.City = person.City;
+            model.PhoneNumber = person.PhoneNumber;
+            return model;
         }
     }
 }

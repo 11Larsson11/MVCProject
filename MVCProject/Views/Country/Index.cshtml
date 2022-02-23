@@ -1,0 +1,51 @@
+﻿@model AllCountriesViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h1>Countries</h1>
+
+
+<div id="tempPost">
+    <h3>Create new country</h3>
+    <div>
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly"></div>
+            <div>
+                <label>Enter country name</label>
+                <input asp-for="Country.Name" />
+                <span asp-validation-for="Country.Name"></span>
+            </div>
+            <div>
+                <input type="submit" value="Create" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div id="trusted">
+    <h3>List of countries</h3>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Delete</th>
+        </tr>
+
+
+        @foreach (var item in Model.Countries)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.CountryId">Delete</a>
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+

@@ -1,4 +1,5 @@
-﻿using MVCProject.ViewModels;
+﻿using MVCProject.DataModels;
+using MVCProject.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,28 +10,24 @@ namespace MVCProject.Models
     public class PersonService : IPersonService
     {
         private readonly IPersonRepo _personRepo;
+        private readonly PersonContext _context;
 
-        public PersonService()
+
+        public PersonService(PersonContext context)
         {
-            _personRepo = new PersonRepo();
+            //_personRepo = new PersonRepo();
+            _context = context;
         }
 
-        public Person Add(CreatePersonViewModel personVM)
+        public Person Add(CreatePersonViewModel createPersonViewModel)
         {
-            if (string.IsNullOrWhiteSpace(personVM.Name) || string.IsNullOrWhiteSpace(personVM.City) || string.IsNullOrWhiteSpace(personVM.PhoneNumber))
-            {
-                return null;
-            }
-            Person newPerson = new Person()
-            {
-                Name = personVM.Name,
-                City = personVM.City,
-                PhoneNumber = personVM.PhoneNumber
-            };
 
-            Person person = _personRepo.Create(newPerson);
-
+            Person person = new Person();
+            person.Name = createPersonViewModel.Name;
+            person.City = createPersonViewModel.City;
+            person.PhoneNumber = createPersonViewModel.PhoneNumber;
             return person;
+
         }
       
 
@@ -53,7 +50,7 @@ namespace MVCProject.Models
 
                 foreach (var item in list)
                 {
-                    if (item.Name.Contains(text) || item.City.Contains(text) || (item.PhoneNumber.Contains(text)))
+                    if (item.Name.Contains(text) || /* item.City.Contains(text)  || */ (item.PhoneNumber.Contains(text)))
                     {
                         matches.Add(item);
                     }

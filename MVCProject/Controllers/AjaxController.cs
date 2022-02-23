@@ -14,7 +14,7 @@ namespace MVCProject.Controllers
 
         public AjaxController()
         {
-            _personService = new PersonService();   //An instance to reach 
+           // _personService = new PersonService();   //An instance to reach 
         }
 
         public IActionResult PersonIndex()
@@ -26,11 +26,11 @@ namespace MVCProject.Controllers
         public IActionResult PartialViewAll()
         {
 
-            PeopleViewModel model = new PeopleViewModel();
-            model.AllPersons = _personService.GetList();
+            //PeopleViewModel model = new PeopleViewModel();
+            //model.People = _personService.GetList();
 
-            return PartialView("_PartialViewAll", model.AllPersons);
-
+            //return PartialView("_PartialViewAll", model.People);
+            return View();
         }
 
         

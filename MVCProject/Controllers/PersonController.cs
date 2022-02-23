@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MVCProject.DataModels;
 using MVCProject.Models;
 using MVCProject.ViewModels;
 using System;
@@ -11,98 +12,61 @@ namespace MVCProject.Controllers
 {
     public class PersonController : Controller
     {
-        
-   
+
         private readonly IPersonService _personService;
 
-        public PersonController()
+        private readonly PersonContext _context;
+        public PersonController(IPersonService personService, PersonContext context)
         {
-            _personService = new PersonService();   //An instance to reach 
+            _personService = personService;
+            _context = context;
         }
-
-        public ActionResult PersonIndex()
-        {
-            PeopleViewModel model = new PeopleViewModel();
-            model.AllPersons = _personService.GetList();
-
-            return View(model.AllPersons);
-
-        }
-
 
         [HttpGet]
-        public ActionResult Create()
+        public ActionResult PersonIndex()
         {
+            //PeopleViewModel model = new PeopleViewModel();
+            //model.People = _personService.GetList();
+            //return View(model.People);
             return View();
         }
 
-        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CreatePersonViewModel createViewModel)
+        public IActionResult Create([Bind("Id, Name, PhoneNumber, CityId")] CreatePersonViewModel createPersonViewModel)
         {
-
+            Person person = CreatePerson(createPersonViewModel);
             if (ModelState.IsValid)
             {
-                Person person = _personService.Add(createViewModel);
+                _context.Add(person);
+                _context.SaveChanges();
 
-                if (person != null)
-                {
-                    return RedirectToAction(nameof(PersonIndex), "Person");
-                }
-
-                ModelState.AddModelError("Storage", "Failed to save");
             }
 
-            return Redirect("PersonIndex");
-
-        }
-   
-
-        public IActionResult Search(string text)
-        {
-            return View("PersonIndex", _personService.Search(text));
-        }
-
-        [HttpGet]
-        public IActionResult SearchPartial()
-        {
-            return PartialView("_SearchPartial");
-        }
-
-        [HttpPost]
-        public IActionResult SearchPartial(string text)
-        {
-            return PartialView("_SearchPartial", _personService.Search(text));
+            //ViewData["CityId"] = new SelectList(_context.Cities, "Id", "Name", person.CityId);
+            return RedirectToAction("Index");
         }
 
 
-        public IActionResult Details(int id)
+        [HttpDelete]
+        public IActionResult Delete(int id)
         {
-            Person person = _personService.GetById(id);
-
+            var person = _context.People
+                .FirstOrDefault(person => person.Id == id);
             if (person == null)
             {
-                return RedirectToAction(nameof(PersonIndex));
+                return NotFound();
             }
 
-            return View(person);
+            _context.People.Remove(person);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult DeletePerson(int Id)
+        private Person CreatePerson(CreatePersonViewModel createPersonViewModel)
         {
-            
-            try
-            {
-                _personService.DeletePerson(Id);
-            }
-            catch
-            
-            {
-                ViewBag.msg = "It can't be true. Something went wrong!";
-            }
-
-            return RedirectToAction("PersonIndex");
+            Person person = _personService.Add(createPersonViewModel);
+            return person;
         }
     }
 }

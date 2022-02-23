@@ -27,6 +27,7 @@
   <ItemGroup>
     <Folder Include="Helpers\" />
     <Folder Include="App_Data\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>
