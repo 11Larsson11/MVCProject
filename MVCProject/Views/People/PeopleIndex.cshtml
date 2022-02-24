@@ -50,24 +50,24 @@
         <tbody>
             @foreach (var person in Model.People)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => person.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => person.City.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => person.City.Country.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => person.PhoneNumber)
-                    </td>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => person.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => person.City.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => person.City.Country.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => person.PhoneNumber)
+                </td>
 
-                    <td>
-                        <a asp-action="Delete" asp-route-id="@person.Id">Delete</a>
-                    </td>
-                </tr>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@person.Id">Delete</a>
+                </td>
+            </tr>
             }
         </tbody>
 

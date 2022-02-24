@@ -1,0 +1,56 @@
+﻿@model PersonLanguageViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>People and languages</h1>
+
+
+<div id="tempPost">
+    <h3>Create a new combination person/language</h3>
+    <div>
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly"></div>
+            <div>
+                <label>Choose person</label>
+                <select asp-for="PersonLanguage.PersonId" asp-items="ViewBag.PersonId"></select>
+            </div>
+            <div>
+                <label>Choose language</label>
+                <select asp-for="PersonLanguage.LanguageId" asp-items="ViewBag.LanguageId"></select>
+            </div>
+            <div>
+                <input type="submit" value="Create" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <h3>List of people and languages</h3>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Language</th>
+        </tr>
+        <tbody>
+            @foreach (var item in Model.PersonLanguages)
+            {
+                <tr>
+                    <td>
+                        @item.Person.Name
+                    </td>
+                    <td>
+                        @item.Language.Name
+                    </td>
+                    <td>
+                        @Html.ActionLink("Delete", "Delete", new { id = item.PersonId, item.LanguageId })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

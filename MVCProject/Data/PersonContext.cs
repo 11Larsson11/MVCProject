@@ -1,21 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MVCProject.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MVCProject.DataModels
 {
     public class PersonContext: DbContext
     {
         public PersonContext(){}
-
         public PersonContext(DbContextOptions<PersonContext> options) : base(options){}
-
         public DbSet<Person> People { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Country> Countries { get; set; }
+        public DbSet<Language> Language { get; set; }
+        public DbSet<PersonLanguage> PersonLanguage { get; set; }
 
 
         protected override void OnModelCreating (ModelBuilder modelBuilder)
@@ -32,6 +29,23 @@ namespace MVCProject.DataModels
                 .WithMany(city => city.Persons)
                 .HasForeignKey(person => person.CityId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<PersonLanguage>()
+                .HasKey(personLanguage => new { personLanguage.PersonId, personLanguage.LanguageId });
+
+            modelBuilder.Entity<PersonLanguage>()
+                .HasOne<Person>(personLanguage => personLanguage.Person)
+                .WithMany(person => person.PersonLanguage)
+                .HasForeignKey(personLanguage => personLanguage.PersonId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<PersonLanguage>()
+                .HasOne<Language>(personLanguage => personLanguage.Language)
+                .WithMany(language => language.PersonLanguages)
+                .HasForeignKey(personLanguage => personLanguage.LanguageId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
 
             modelBuilder.Entity<Person>().HasData(new List<Person>
             {
@@ -76,6 +90,34 @@ namespace MVCProject.DataModels
 
             });
 
+            modelBuilder.Entity<Language>().HasData(new List<Language>
+            {
+                new Language
+                    {Id = 1001, Name = "Swedish" },
+                new Language
+                    {Id = 1002, Name = "Norwegian" },
+                new Language
+                    {Id = 1003, Name = "Russian" },
+
+
+            });
+
+            modelBuilder.Entity<PersonLanguage>().HasData(new List<PersonLanguage>
+            {
+                new PersonLanguage
+                    {PersonId = 1, LanguageId = 1001 },
+                new PersonLanguage
+                    {PersonId = 2, LanguageId = 1001 },
+                new PersonLanguage
+                    {PersonId = 3, LanguageId = 1001 },
+                new PersonLanguage
+                    {PersonId = 4, LanguageId = 1001 },
+                new PersonLanguage
+                    {PersonId = 5, LanguageId = 1003 },
+                new PersonLanguage
+                    {PersonId = 6, LanguageId = 1002 },
+
+            });
         }     
     }
 }

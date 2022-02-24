@@ -1,0 +1,49 @@
+﻿@model LanguageViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Languages</h1>
+
+<div id="tempPost">
+    <h3>Create a new language</h3>
+    <div>
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly"></div>
+            <div>
+                <label>Enter language</label>
+                <input asp-for="Language.Name" />
+                <span asp-validation-for="Language.Name"></span>
+            </div>
+            <div>
+                <input type="submit" value="Create" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <h3>List of languages</h3>
+    <table>
+        <tr>
+            <th>Name</th>
+        </tr>
+
+
+        @foreach (var item in Model.Languages)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
