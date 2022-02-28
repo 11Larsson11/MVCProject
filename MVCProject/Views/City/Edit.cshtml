@@ -1,0 +1,36 @@
+﻿@model City
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit city</h2>
+
+<div class="row">
+    <div>
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly"></div>
+            <input type="hidden" asp-for="Id" />
+            <div>
+                <label>Country name</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name"></span>
+            </div>
+
+            <div>
+                <label>Country ID</label>
+                <select asp-for="CountryId" asp-items="ViewBag.CountryId"></select>
+                <span asp-validation-for="CountryId"></span>
+            </div>
+
+
+            <div>
+                <input type="submit" value="Save changes" class="btn" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-action="Index">Back</a>
+</div>

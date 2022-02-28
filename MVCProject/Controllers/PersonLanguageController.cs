@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MVCProject.DataModels;
@@ -8,7 +9,7 @@ using System.Linq;
 
 namespace MVCProject.Controllers
 {
-
+    [Authorize(Roles = "Admin, User")]
     public class PersonLanguageController : Controller
         {
             private readonly PersonContext _context;

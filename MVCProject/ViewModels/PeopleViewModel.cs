@@ -9,6 +9,8 @@ namespace MVCProject.ViewModels
 
         public List<PersonViewModel> People { get; set; }
 
+        public PersonLanguage PersonLanguage { get; set; }
+
         public CreatePersonViewModel CreatePersonViewModel { get; set; }
 
         public PeopleViewModel(List<PersonViewModel> people)

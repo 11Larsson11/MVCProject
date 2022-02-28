@@ -24,26 +24,30 @@
     </div>
 </div>
 
-
 <div>
     <h3>List of countries</h3>
     <table>
         <tr>
             <th>Name</th>
             <th>Delete</th>
+            <th>Edit</th>
         </tr>
 
 
         @foreach (var item in Model.Countries)
         {
-            <tr>
-                <td>
-                    @item.Name
-                </td>
-                <td>
-                    <a asp-action="Delete" asp-route-id="@item.CountryId">Delete</a>
-                </td>
-            </tr>
+    <tr>
+        <td>
+            @item.Name
+        </td>
+        <td>
+            <a asp-action="Delete" asp-route-id="@item.CountryId">Delete</a>
+        </td>
+        <td>
+            <a asp-action="Edit" asp-route-id="@item.CountryId">Edit</a>
+        </td>
+
+        </tr>
         }
 
     </table>

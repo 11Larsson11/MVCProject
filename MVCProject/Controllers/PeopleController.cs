@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MVCProject.DataModels;
@@ -9,6 +10,7 @@ using System.Linq;
 
 namespace MVCProject.Controllers
 {
+    [Authorize(Roles = "Admin, User")]
     public class PeopleController : Controller
     {
         private readonly PersonContext _context;
@@ -47,8 +49,23 @@ namespace MVCProject.Controllers
 
             return RedirectToAction("PeopleIndex");
         }
+        public IActionResult Edit(int id)
+        {
+            Person person = _context.People.FirstOrDefault(person => person.Id == id);
 
+            ViewData["CityId"] = new SelectList(_context.Cities, "Id", "Name");   //returning a dropdown list of cities to choose from
+            return View(person);
+        }
 
+        [HttpPost]
+        public IActionResult Edit(Person person)
+        {
+            _context.Entry(person).State = EntityState.Modified;
+            _context.SaveChanges();
+            return RedirectToAction("PeopleIndex");
+        }
+
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int? id)
         {
             var person = _context.People

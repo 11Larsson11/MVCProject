@@ -3,6 +3,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
     <link type="text/css" rel="stylesheet" href="/Content/MVCStyling2.css" />
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
 
@@ -11,23 +12,39 @@
 <body>
 
     <h1>Richard Larsson</h1>
+    <partial name="_LoginPartial"/>
     <div>
+
         @Html.ActionLink("Home", "Index", "Home")
         @Html.ActionLink("About", "About", "Home")
         @Html.ActionLink("Projects", "Projects", "Home")
         @Html.ActionLink("Contact", "Contact", "Home")
         @Html.ActionLink("Feverchecker", "FeverCheck", "Doctor")
         @Html.ActionLink("Guessing Game", "GuessingGame", "Guesser")
+     
     </div>
 
-    <h3>People - Cities - Countries</h3>
-    <div>       
-        @Html.ActionLink("People", "PeopleIndex", "People")
+    
+    <div>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div>
+                <h3>People - Cities - Countries - Languages - Roles</h3>
+            </div>
+            @Html.ActionLink("People", "PeopleIndex", "People")
+
+            @if (User.IsInRole("Admin"))
+            {
+    <div>
         @Html.ActionLink("Cities", "Index", "City")
         @Html.ActionLink("Countries", "Index", "Country")
         @Html.ActionLink("Languages", "Index", "Language")
         @Html.ActionLink("People and languages", "Index", "PersonLanguage")
+        @Html.ActionLink("Roles", "Index", "Role")
     </div>
+                }
+            }
+        </div>
 
 
 

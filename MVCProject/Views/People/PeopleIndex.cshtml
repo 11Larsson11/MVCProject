@@ -26,7 +26,7 @@
             <div>
                 <label>Phone Number</label>
                 <input asp-for="CreatePersonViewModel.PhoneNumber" />
-                <span asp-validation-for="CreatePersonViewModel.PhoneNumber" ></span>
+                <span asp-validation-for="CreatePersonViewModel.PhoneNumber"></span>
             </div>
             <div>
                 <input type="submit" value="Create" />
@@ -44,8 +44,12 @@
             <th>City</th>
             <th>Country</th>
             <th>Phone Number</th>
-            <th>Delete</th>
-        </tr>
+            @if (User.IsInRole("Admin"))
+            {
+                <th>Edit</th>
+                <th>Delete</th>
+            }
+            </tr>
 
         <tbody>
             @foreach (var person in Model.People)
@@ -63,10 +67,16 @@
                 <td>
                     @Html.DisplayFor(modelItem => person.PhoneNumber)
                 </td>
-
                 <td>
-                    <a asp-action="Delete" asp-route-id="@person.Id">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@person.Id">Edit</a>
                 </td>
+
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        <a asp-action="Delete" asp-route-id="@person.Id">Delete</a>
+                    </td>
+                }
             </tr>
             }
         </tbody>

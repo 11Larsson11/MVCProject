@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MVCProject.DataModels;
 using MVCProject.Models;
@@ -7,6 +8,7 @@ using System.Linq;
 
 namespace MVCProject.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CountryController : Controller
     {
         private readonly PersonContext _context;
@@ -34,6 +36,23 @@ namespace MVCProject.Controllers
             }
             return View(country);
         }
+
+        public IActionResult Edit(int id)
+        {
+            Country country = _context.Countries
+                .FirstOrDefault(country => country.Id == id);
+
+            return View(country);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Country country)
+        {
+            _context.Entry(country).State = EntityState.Modified;
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        
 
         public IActionResult Delete(int id)
         {

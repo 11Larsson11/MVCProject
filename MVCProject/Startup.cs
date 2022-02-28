@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MVCProject.DataModels;
+using MVCProject.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +36,13 @@ namespace MVCProject
             services.AddHttpContextAccessor();
             services.AddSession();
             services.AddMvc();
+
+            services.AddRazorPages();
+
+            services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddDefaultUI()
+                .AddDefaultTokenProviders()
+                .AddEntityFrameworkStores<PersonContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,8 +54,10 @@ namespace MVCProject
             }
 
             app.UseStaticFiles();
-
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseSession();
 
@@ -64,6 +75,7 @@ namespace MVCProject
                     name: "GuessingGame",
                     pattern: "GuessingGame",
                     defaults: new { controller = "Guesser", action = "GuessingGame" });
+                endpoints.MapRazorPages();
             });
         }
     }

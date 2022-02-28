@@ -1,10 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MVCProject.Models;
+using System;
 using System.Collections.Generic;
 
 namespace MVCProject.DataModels
 {
-    public class PersonContext: DbContext
+    public class PersonContext: IdentityDbContext<ApplicationUser>
     {
         public PersonContext(){}
         public PersonContext(DbContextOptions<PersonContext> options) : base(options){}
@@ -13,11 +16,13 @@ namespace MVCProject.DataModels
         public DbSet<Country> Countries { get; set; }
         public DbSet<Language> Language { get; set; }
         public DbSet<PersonLanguage> PersonLanguage { get; set; }
+        public DbSet<ApplicationUser> Users { get; set; }
 
 
         protected override void OnModelCreating (ModelBuilder modelBuilder)
         {
-            
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<City>()
                 .HasOne<Country>(city => city.Country)
                 .WithMany(country => country.Cities)
@@ -117,6 +122,45 @@ namespace MVCProject.DataModels
                 new PersonLanguage
                     {PersonId = 6, LanguageId = 1002 },
 
+            });
+
+            string roleId = Guid.NewGuid().ToString();
+            string userRoleId = Guid.NewGuid().ToString();
+            string userId = Guid.NewGuid().ToString();
+
+            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
+            {
+                Id = roleId,
+                Name = "Admin",
+                NormalizedName = "ADMIN"
+            });
+
+            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
+            {
+                Id = userRoleId,
+                Name = "User",
+                NormalizedName = "USER"
+            });
+
+            PasswordHasher<ApplicationUser> hasher = new PasswordHasher<ApplicationUser>();
+
+            modelBuilder.Entity<ApplicationUser>().HasData(new ApplicationUser
+            {
+                Id = userId,
+                Email = "admin@admin.com",
+                NormalizedEmail = "ADMIN@ADMIN.COM",
+                UserName = "admin@admin.com",
+                NormalizedUserName = "ADMIN@ADMIN.COM",
+                PasswordHash = hasher.HashPassword(null, "password"),
+                FirstName = "Bruno",
+                LastName = "Spekel",
+                BirthDate = "2001-02-18"
+            });
+
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+            {
+                RoleId = roleId,
+                UserId = userId
             });
         }     
     }

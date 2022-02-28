@@ -38,17 +38,20 @@
 
         @foreach (var item in Model.Cities)
         {
-            <tr>
-                <td>
-                    @item.Name
-                </td>
-                <td>
-                    @item.Country.Name
-                </td>
-                <td>
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
+    <tr>
+        <td>
+            @item.Name
+        </td>
+        <td>
+            @item.Country.Name
+        </td>
+        <td>
+            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+        </td>
+        <td>
+            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+        </td>
+    </tr>
         }
 
     </table>

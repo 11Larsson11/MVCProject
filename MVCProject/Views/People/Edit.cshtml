@@ -1,0 +1,41 @@
+﻿@model Person
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit person</h2>
+
+<div class="row">
+    <div>
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly"></div>
+            <input type="hidden" asp-for="Id" />
+            <div>
+                <label>Country name</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name"></span>
+            </div>
+
+            <div>
+                <label>City ID</label>
+                <select asp-for="CityId" asp-items="ViewBag.CityId"></select>
+                <span asp-validation-for="CityId"></span>
+            </div>
+
+            <div>
+                <label>Phone number</label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber"></span>
+            </div>
+
+            <div>
+                <input type="submit" value="Save changes" class="btn" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-action="PeopleIndex">Back</a>
+</div>
