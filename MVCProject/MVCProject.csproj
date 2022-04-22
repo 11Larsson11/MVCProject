@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="React\**" />
+    <Content Remove="React\**" />
+    <EmbeddedResource Remove="React\**" />
+    <None Remove="React\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\Content\MVCStyling2.css" />
   </ItemGroup>
 
@@ -26,6 +33,7 @@
     <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="3.1.22" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Webpack" Version="4.0.0" />
   </ItemGroup>
 
   <ItemGroup>
